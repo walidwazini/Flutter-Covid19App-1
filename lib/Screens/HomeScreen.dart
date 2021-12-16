@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart'; // ignore: filenames
 import 'package:flutter_svg/svg.dart';
 
+import '../Constant.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -17,7 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Column(
         children: [
-          Text('Hello'),
           ClipPath(
             clipper: MyClipper(),
             child: Container(
@@ -55,7 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           left: 150,
                           child: Text(
                             'Stay at home',
-                            style: null,
+                            style:
+                                kHeadingTextStyle.copyWith(color: Colors.white),
                           ),
                         ),
                         Container()
@@ -78,7 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(width: 20),
                 Expanded(
                   child: DropdownButton(
-                    value: selected ? 'Choose' : dropDownValue,
+                    isExpanded: true,
+                    value: dropDownValue,
                     underline: SizedBox(),
                     items: ['INA', 'Bangladesh']
                         .map<DropdownMenuItem<String>>((String choice) {
@@ -97,7 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -105,26 +110,93 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   children: [
                     RichText(
-                      text: TextSpan(
-                        children: const [
-                          TextSpan(
-                            text: 'Case',
-                            style: null,
+                      text: TextSpan(children: [
+                        TextSpan(
+                          text: 'Case Update',
+                          style: kTitleTextStyle,
+                        ),
+                        TextSpan(
+                          text: 'Update as of March 28',
+                          style: TextStyle(
+                            color: kTextLightColor,
                           ),
-                          TextSpan(
-                            text: 'Update as of March 28',
-                            style: null,
-                          )
-                        ]
-                      ),
+                        )
+                      ]),
+                    ),
+                    Spacer(),
+                    Text(
+                      'See Details',
+                      style: TextStyle(
+                          color: kPrimaryColor, fontWeight: FontWeight.w500),
                     )
                   ],
+                ),
+                SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          offset: Offset(0, 5),
+                          blurRadius: 30,
+                          color: kShadowColor,
+                        )
+                      ]),
+                  child: Row(
+                    children: [
+                      Counter()
+                    ],
+                  ),
                 )
               ],
             ),
           )
         ],
       ),
+    );
+  }
+}
+
+class Counter extends StatelessWidget {
+  const Counter({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.all(5),
+          height: 25,
+          width: 25,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: kInfectedColor.withOpacity(.24),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.transparent,
+                border: Border.all(
+                  color: kInfectedColor,
+                  width: 2,
+                )),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          '1046',
+          style: TextStyle(
+            fontSize: 40,
+            color: kInfectedColor,
+          ),
+        ),
+      ],
     );
   }
 }
